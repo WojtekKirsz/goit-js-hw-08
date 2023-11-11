@@ -7,28 +7,22 @@ import SimpleLightbox from 'simplelightbox';
 // // Dodatkowy import stylów
 import 'simplelightbox/dist/simple-lightbox.min.css';
 
-// console.log(galleryItems);
-
 function generateGalleryItem(item) {
-  const galleryItem = document.createElement('div');
-  galleryItem.classList.add('gallery__item');
+  const galleryItem = document.createElement('li');
+  const galleryItemA = document.createElement('a');
+  galleryItemA.classList.add('gallery__item');
+  galleryItemA.setAttribute('href', item.original);
+  galleryItemA.setAttribute('alt', item.description);
 
-  const galleryElementA = document.createElement('a');
-  galleryElementA.classList.add('gallery__link');
-  galleryElementA.setAttribute('href', item.original);
-
-  galleryElementA.addEventListener('click', event => {
+  galleryItemA.addEventListener('click', event => {
     event.preventDefault();
   });
 
   const image = document.createElement('img');
   image.classList.add('gallery__image');
   image.setAttribute('src', item.preview);
-  image.setAttribute('data-source', item.original);
-  image.setAttribute('alt', item.description);
-
-  galleryItem.appendChild(galleryElementA);
-  galleryElementA.appendChild(image);
+  galleryItem.appendChild(galleryItemA);
+  galleryItemA.appendChild(image);
 
   return galleryItem;
 }
@@ -36,21 +30,18 @@ function generateGalleryItem(item) {
 function renderGallery() {
   const galleryContainer = document.querySelector('.gallery');
 
-  galleryContainer.addEventListener('click', event => {
-    if (event.target.tagName === 'IMG') {
-      const originalImageSrc = event.target.getAttribute('data-source');
-
-      SimpleLightbox.create(
-        `
-          <img src="${originalImageSrc}">
-        `
-      ).show();
-    }
-  });
-
   galleryItems.forEach(item => {
     const galleryItem = generateGalleryItem(item);
     galleryContainer.appendChild(galleryItem);
+  });
+
+  const gallery = new SimpleLightbox('.gallery a', {
+    captions: true,
+    captionSelector: 'self',
+    captionType: 'attr',
+    captionsData: 'alt',
+    captionPosition: 'bottom',
+    captionDelay: 250,
   });
 }
 
