@@ -13,7 +13,7 @@ function generateGalleryItem(item) {
   const galleryItem = document.createElement('div');
   galleryItem.classList.add('gallery__item');
 
-  const galleryElementA = document.querySelector('a');
+  const galleryElementA = document.createElement('a');
   galleryElementA.classList.add('gallery__link');
   galleryElementA.setAttribute('href', item.original);
 
@@ -25,7 +25,7 @@ function generateGalleryItem(item) {
   image.classList.add('gallery__image');
   image.setAttribute('src', item.preview);
   image.setAttribute('data-source', item.original);
-  image.setAttribute('alt', iitem.description);
+  image.setAttribute('alt', item.description);
 
   galleryItem.appendChild(galleryElementA);
   galleryElementA.appendChild(image);
@@ -40,13 +40,11 @@ function renderGallery() {
     if (event.target.tagName === 'IMG') {
       const originalImageSrc = event.target.getAttribute('data-source');
 
-      basicLightbox
-        .create(
-          `
+      SimpleLightbox.create(
+        `
           <img src="${originalImageSrc}">
         `
-        )
-        .show();
+      ).show();
     }
   });
 
