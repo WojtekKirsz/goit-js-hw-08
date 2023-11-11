@@ -4,4 +4,9 @@ import { galleryItems } from './gallery-items';
 
 console.log(galleryItems);
 
-console.log('test');
+function generateGalleryItem(item) {
+  const galleryItem = document.createElement('div');
+  galleryItem.classList.add('gallery__item');
+
+  return galleryItem;
+}
