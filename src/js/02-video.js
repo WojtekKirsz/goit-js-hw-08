@@ -9,6 +9,8 @@ player.getVideoTitle().then(function (title) {
   console.log('title:', title);
 });
 
-player.on('timeupdate', function () {
-  console.log('current time played');
+player.on('timeupdate', function (data) {
+  console.log('Current time played:', data.seconds, 'seconds');
+  console.log('Duration:', data.duration, 'seconds');
+  console.log('Percent played:', data.percent * 100, '%');
 });
