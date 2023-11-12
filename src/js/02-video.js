@@ -8,3 +8,7 @@ player.on('play', function () {
 player.getVideoTitle().then(function (title) {
   console.log('title:', title);
 });
+
+player.on('timeupdate', function () {
+  console.log('current time played');
+});
