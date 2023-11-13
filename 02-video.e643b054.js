@@ -1,2 +1,0 @@
-!function(){var e=document.querySelector("iframe"),o=new Vimeo.Player(e);o.on("play",(function(){console.log("played the video!")})),o.getVideoTitle().then((function(e){console.log("title:",e)})),o.on("timeupdate",(function(e){console.log("Current time played:",e.seconds,"seconds"),console.log("Duration:",e.duration,"seconds"),console.log("Percent played:",100*e.percent,"%")}))}();
-//# sourceMappingURL=02-video.e643b054.js.map
