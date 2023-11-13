@@ -21,14 +21,22 @@ const iframe = document.querySelector('iframe');
 const player = new Vimeo.Player(iframe);
 
 // Funkcja do zapisywania czasu odtwarzania w Local Storage
-function saveCurrentTimeToLocalStorage(time) {
-  localStorage.setItem('videoplayer-current-time', time);
+function saveCurrentTimeToLocalStorage(currentTime) {
+  localStorage.setItem('videoplayer-current-time', currentTime);
 }
 
 // Funkcja do pobierania czasu odtwarzania z Local Storage
 function getCurrentTimeFromLocalStorage() {
   const storedTime = localStorage.getItem('videoplayer-current-time');
+
   return storedTime ? parseFloat(storedTime) : 0;
+
+  // alternative code below
+  // if (storedTime) {
+  //   return parseFloat(storedTime)
+  // } else {
+  //   return 0
+  // }
 }
 
 // Funkcja do wznowienia odtwarzania od zapisanego momentu
