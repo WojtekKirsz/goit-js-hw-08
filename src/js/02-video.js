@@ -1,3 +1,5 @@
+import throttle from 'lodash.throttle';
+
 const iframe = document.querySelector('iframe');
 const player = new Vimeo.Player(iframe);
 
@@ -9,14 +11,28 @@ player.getVideoTitle().then(function (title) {
   console.log('title:', title);
 });
 
-player.on('timeupdate', function (data) {
-  // Zapisz aktualny czas odtwarzania w Local Storage
-  saveCurrentTimeToLocalStorage(data.seconds);
+// Handler zdarzenia 'timeupdate' z wykorzystaniem _.throttle
+const throttledTimeUpdateHandler = throttle(function (data) {
+  const currentTime = data.seconds;
 
-  console.log('Current time played:', data.seconds, 'seconds');
+  // Zapisz aktualny czas odtwarzania w Local Storage
+  saveCurrentTimeToLocalStorage(currentTime);
+  console.log('Current time played:', currentTime, 'seconds');
   console.log('Duration:', data.duration, 'seconds');
   console.log('Percent played:', data.percent * 100, '%');
-});
+}, 1000); // Czas opóźnienia w milisekundach (ustaw na 1000, aby zaktualizować co sekundę)
+
+// Dodaj handler do zdarzenia 'timeupdate'
+player.on('timeupdate', throttledTimeUpdateHandler);
+
+// player.on('timeupdate', function (data) {
+//   // Zapisz aktualny czas odtwarzania w Local Storage
+//   saveCurrentTimeToLocalStorage(data.seconds);
+
+//   console.log('Current time played:', data.seconds, 'seconds');
+//   console.log('Duration:', data.duration, 'seconds');
+//   console.log('Percent played:', data.percent * 100, '%');
+// });
 
 // Funkcja do zapisywania czasu odtwarzania w Local Storage
 function saveCurrentTimeToLocalStorage(currentTime) {
