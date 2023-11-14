@@ -1,6 +1,6 @@
 const form = document.querySelector('.feedback-form');
 
-const localStorageKey = 'value';
+const localStorageKey = 'message';
 
 form.elements.message.value = localStorageKey.getItem(localStorageKey) ?? '';
 
